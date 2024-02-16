@@ -1,24 +1,23 @@
+import { NavLink } from "react-router-dom";
+
 const Header = () => {
   return (
     <header className="bg-gray-800 text-white py-4">
-      <div className="container mx-auto">
-        <h1 className="text-2xl font-bold">Redux Books</h1>
-        <nav className="mt-4">
-          <ul className="flex space-x-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <NavLink to={"/"} className="text-2xl font-bold">
+          Redux Books
+        </NavLink>
+        <nav>
+          <ul className="flex space-x-4 justify-center items-center">
             <li>
-              <a href="#" className="hover:text-gray-300">
+              <NavLink to="/" className="hover:text-gray-300">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="#" className="hover:text-gray-300">
-                Sobre
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-gray-300">
-                Contato
-              </a>
+              <NavLink to="/carrinho" className="hover:text-gray-300">
+                Carrinho
+              </NavLink>
             </li>
           </ul>
         </nav>
