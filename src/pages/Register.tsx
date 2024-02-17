@@ -7,7 +7,8 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRegisterMutation } from "@/redux/api/authApi/authApi";
+import { useRegisterMutation } from "@/redux/api/authApi";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
