@@ -14,6 +14,9 @@ export const authApi = createApi({
       query: (body) => ({
         url: "register",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body,
       }),
     }),

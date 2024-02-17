@@ -7,7 +7,8 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRegisterMutation } from "@/redux/api/authApi/reqresApi";
+import { useRegisterMutation } from "@/redux/api/authApi";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
@@ -26,10 +27,23 @@ const registerSchema = z
       .max(20, {
         message: "A senha não pode ser maior que 20 caracteres.",
       }),
-    confirmPassword: z.string(),
+    confirmPassword: z
+      .string()
+      .min(6, {
+        message: "A senha precisa ter ao menos 6 caracteres.",
+      })
+      .max(20, {
+        message: "A senha não pode ser maior que 20 caracteres.",
+      }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "A senhas devem ser idênticas.",
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.path.push("confirmPassword");
+      ctx.addIssue({
+        code: "custom",
+        message: "As senhas precisam ser idênticas.",
+      });
+    }
   });
 
 type RegisterSchema = z.infer<typeof registerSchema>;
@@ -40,19 +54,20 @@ export function Register() {
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "eve.holt@reqres.in",
-      password: "pistol",
-      confirmPassword: "pistol",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(formData: RegisterSchema) {
-    const { email, password } = formData;
+    const { email, password, confirmPassword } = formData;
 
-    await registerMutation({ email, password })
+    await registerMutation({ email, password, confirmPassword })
       .unwrap()
       .then((payload) => {
         console.log("fulfilled", payload);
+
         form.setError("root", {
           type: "success",
           message: "Registro concluído!",
@@ -64,10 +79,18 @@ export function Register() {
       })
       .catch((error) => {
         console.error("rejected", error);
-        form.setError("root", {
-          type: "error",
-          message: "Algo deu errado! Por favor, tente novamente.",
-        });
+
+        if (error.status === 400) {
+          form.setError("root", {
+            type: "error",
+            message: "Email já cadastrado.",
+          });
+        } else {
+          form.setError("root", {
+            type: "error",
+            message: "Algo deu errado, por favor tente novamente mais tarde.",
+          });
+        }
       });
   }
 

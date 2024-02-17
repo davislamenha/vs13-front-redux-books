@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import CartList from '@/components/CartList';
-import { useAppSelector } from '@/featured/hooks';
+import { useEffect, useState } from "react";
+import CartList from "@/components/CartList";
+import { useAppSelector } from "@/redux/hooks/reduxTypedHooks";
 
 const Cart = () => {
   const { cart } = useAppSelector((state) => state.cart);
@@ -12,7 +12,7 @@ const Cart = () => {
   const calculateTotals = () => {
     const subtotalAmount = cart.reduce(
       (acc, book) => acc + book.retailPrice.amount * book.quantity,
-      0,
+      0
     );
     const freightAmount = subtotalAmount * 0.2;
     const totalAmount = subtotalAmount + freightAmount;
@@ -28,35 +28,35 @@ const Cart = () => {
   }, [cart]);
 
   return (
-    <div className="container mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-semibold mb-4">Seu Carrinho de Compras</h1>
+    <div className="container p-6 mx-auto mt-8 bg-white rounded-lg shadow-lg">
+      <h1 className="mb-4 text-2xl font-semibold">Seu Carrinho de Compras</h1>
       <CartList books={cart} />
       <div className="mt-8">
-        <h2 className="text-lg font-semibold mb-2">Resumo do Pedido</h2>
-        <div className="bg-gray-100 rounded-lg p-4">
-          <p className="text-gray-800 font-semibold">
-            Subtotal:{' '}
-            {subtotal.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+        <h2 className="mb-2 text-lg font-semibold">Resumo do Pedido</h2>
+        <div className="p-4 bg-gray-100 rounded-lg">
+          <p className="font-semibold text-gray-800">
+            Subtotal:{" "}
+            {subtotal.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
-          <p className="text-gray-800 font-semibold">
-            Frete:{' '}
-            {freight.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+          <p className="font-semibold text-gray-800">
+            Frete:{" "}
+            {freight.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
-          <p className="text-gray-800 font-semibold mt-2">
-            Total:{' '}
-            {total.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+          <p className="mt-2 font-semibold text-gray-800">
+            Total:{" "}
+            {total.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
         </div>
-        <button className="mt-6 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+        <button className="px-4 py-2 mt-6 text-white bg-blue-500 rounded-md hover:bg-blue-600">
           Finalizar Compra
         </button>
       </div>
