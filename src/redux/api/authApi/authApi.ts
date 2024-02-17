@@ -6,14 +6,17 @@ import type {
   LoginUserRequest,
 } from "./types";
 
-export const reqresApi = createApi({
-  reducerPath: "reqresApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://reqres.in/api/" }),
+export const authApi = createApi({
+  reducerPath: "authApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://auth-api.cyclic.app/" }),
   endpoints: (builder) => ({
     register: builder.mutation<RegisterUserResponse, RegisterUserRequest>({
       query: (body) => ({
         url: "register",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body,
       }),
     }),
@@ -30,4 +33,4 @@ export const reqresApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = reqresApi;
+export const { useRegisterMutation, useLoginMutation } = authApi;
