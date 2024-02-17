@@ -1,5 +1,5 @@
-import { ICartBook } from '@/featured/store/reducers/cart';
-import CartProduct from './CartProduct';
+import { ICartBook } from "@/redux/store/reducers/cart";
+import CartProduct from "./CartProduct";
 
 interface CartListProps {
   books: ICartBook[];
@@ -7,7 +7,7 @@ interface CartListProps {
 
 const CartList = ({ books }: CartListProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {books.map((book) => (
         <CartProduct key={book.id} book={book} />
       ))}
