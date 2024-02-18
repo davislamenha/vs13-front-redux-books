@@ -1,23 +1,25 @@
-import { useAppDispatch } from "@/redux/hooks/reduxTypedHooks";
+import { useAppDispatch } from '@/redux/hooks/reduxTypedHooks';
 import {
   ICartBook,
   updateQuantity,
   removeFromCart,
-} from "@/redux/store/reducers/cart";
-import { useEffect, useState } from "react";
+  addToCart,
+} from '@/redux/store/reducers/cart';
+import { useEffect, useState } from 'react';
 
 interface CartProductProps {
   book: ICartBook;
+  cart?: boolean;
 }
 
-const CartProduct = ({ book }: CartProductProps) => {
+const CartProduct = ({ book, cart }: CartProductProps) => {
   const [quantity, setQuantity] = useState(book.quantity);
-  const [total, setTotal] = useState(book.retailPrice.amount * quantity);
+  const [total, setTotal] = useState(book.price * quantity);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setTotal(book.retailPrice.amount * quantity);
-  }, [quantity, book.retailPrice.amount]);
+    setTotal(book.price * quantity);
+  }, [quantity, book.price]);
 
   const increaseQuantity = () => {
     const newQuantity = quantity + 1;
@@ -37,38 +39,55 @@ const CartProduct = ({ book }: CartProductProps) => {
     dispatch(removeFromCart(book.id));
   };
 
+  const handleBuy = () => {
+    dispatch(addToCart({ ...book, quantity }));
+  };
+
   return (
-    <div className="p-4 bg-gray-100 rounded-lg max-w-96">
-      <img
-        srcSet={`${book.imageLinks.smallThumbnail} 475w, ${book.imageLinks.small}`}
-        alt={book.volumeInfo.title}
-        className="w-auto mx-auto mb-4 rounded-lg"
-      />
+    <div className="p-4 bg-gray-100 rounded-lg max-w-96 h-[28rem] flex flex-col">
+      <div className="mb-4 h-48 flex justify-center align-middle">
+        <img
+          src={book.volumeInfo.imageLinks.thumbnail}
+          alt={book.volumeInfo.title}
+          className="max-w-full rounded-lg object-cover"
+        />
+      </div>
+
       <h2 className="mb-2 text-lg font-medium text-center">
         {book.volumeInfo.title}
       </h2>
+
       <p className="text-gray-600">
-        Avaliação: <span className="font-semibold">{book.averageRating}</span>
+        Editora:
+        <span className="font-semibold ms-2">
+          {book.volumeInfo.publisher
+            ? book.volumeInfo.publisher
+            : 'Não informado'}
+        </span>
       </p>
+
       <p className="flex gap-2 mt-2 text-gray-800">
         Preço Unitário:
         <span className="font-semibold">
-          {book.retailPrice.amount.toLocaleString("pt-br", {
-            currency: "BRL",
-            style: "currency",
+          {book.price.toLocaleString('pt-br', {
+            currency: 'BRL',
+            style: 'currency',
           })}
         </span>
       </p>
-      <p className="flex gap-2 mt-2 text-gray-800">
-        Total:
-        <span className="font-semibold">
-          {total.toLocaleString("pt-br", {
-            currency: "BRL",
-            style: "currency",
-          })}
-        </span>
-      </p>
-      <div className="flex items-center justify-between my-4 ">
+      {cart && (
+        <p className="flex gap-2 mt-2 text-gray-800">
+          Total:
+          <span className="font-semibold">
+            {total.toLocaleString('pt-br', {
+              currency: 'BRL',
+              style: 'currency',
+            })}
+          </span>
+        </p>
+      )}
+
+      <div className="flex items-center justify-between flex-1">
         <button
           className="px-3 py-1 bg-gray-200 rounded-md"
           onClick={decreaseQuantity}
@@ -83,12 +102,21 @@ const CartProduct = ({ book }: CartProductProps) => {
           +
         </button>
       </div>
-      <button
-        className="w-full px-4 py-2 text-white uppercase bg-red-500 rounded-md hover:bg-red-600"
-        onClick={handleRemove}
-      >
-        Remover
-      </button>
+      {cart ? (
+        <button
+          className="w-full mt-auto px-4 py-2 text-white uppercase bg-red-500 rounded-md hover:bg-red-600"
+          onClick={handleRemove}
+        >
+          Remover
+        </button>
+      ) : (
+        <button
+          className="w-full mt-auto px-4 py-2 text-white uppercase bg-slate-500 rounded-md hover:bg-slate-600"
+          onClick={handleBuy}
+        >
+          Adicionar ao Carrinho
+        </button>
+      )}
     </div>
   );
 };

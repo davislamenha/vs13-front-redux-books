@@ -1,4 +1,4 @@
-import { IBook } from '@/types/interfaces';
+import { IBook } from '@/redux/api/booksApi/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface ICartBook extends IBook {
@@ -20,10 +20,7 @@ const initialState: CartState = {
 };
 
 const calculateSubtotal = (cart: ICartBook[]) => {
-  return cart.reduce(
-    (acc, book) => acc + book.retailPrice.amount * book.quantity,
-    0,
-  );
+  return cart.reduce((acc, book) => acc + book.price * book.quantity, 0);
 };
 
 const calculateFreight = (subtotal: number) => {
