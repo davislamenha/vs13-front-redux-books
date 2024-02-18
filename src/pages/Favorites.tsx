@@ -4,12 +4,16 @@ import {
   useGetFavoritesQuery,
 } from "@/redux/api/authApi";
 import { Heart } from "@phosphor-icons/react";
+import { useState } from "react";
 
 export function Favorites() {
   const { data, error, isLoading } = useGetFavoritesQuery();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+
   const handleDeleteFavorite = async ({ id }: { id: string }) => {
+    setLoadingId(id);
     await deleteFavorite({ id })
       .unwrap()
       .then((payload) => {
@@ -18,6 +22,8 @@ export function Favorites() {
       .catch((error) => {
         console.log(error);
       });
+
+    setLoadingId(null);
   };
 
   return (
@@ -39,17 +45,21 @@ export function Favorites() {
               >
                 <div className="relative flex justify-center h-48 align-middle">
                   <img src={book.image_url} alt={book.title} />
-                  <button
-                    aria-label="Remover dos favoritos"
-                    className="absolute top-0 right-0 group"
-                    onClick={() => handleDeleteFavorite({ id: book.id })}
-                  >
-                    <Heart
-                      size={32}
-                      weight="fill"
-                      className="transition-all group-hover:text-red-500"
-                    />
-                  </button>
+                  {loadingId === book.id ? (
+                    <svg className="absolute top-0 right-0 p-2 mx-auto border-4 rounded-full size-5 border-primary/50 border-t-primary animate-spin"></svg>
+                  ) : (
+                    <button
+                      aria-label="Remover dos favoritos"
+                      className="absolute top-0 right-0 group"
+                      onClick={() => handleDeleteFavorite({ id: book.id })}
+                    >
+                      <Heart
+                        size={32}
+                        weight="fill"
+                        className="transition-all group-hover:text-red-500"
+                      />
+                    </button>
+                  )}
                 </div>
 
                 <h2 className="mb-2 text-lg font-medium text-center">
