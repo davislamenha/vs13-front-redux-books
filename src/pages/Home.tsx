@@ -76,7 +76,7 @@ const Home = () => {
 
   return (
     <div className="container mx-auto mt-8 p-6 flex-1">
-      <div className="flex justify-between items-center mb-12">
+      <div className="flex justify-between items-center flex-wrap mb-12">
         <h1 className="text-5xl font-bold">Bem-vindo à Livraria</h1>
         <select
           title="pagination"
