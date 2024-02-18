@@ -10,6 +10,7 @@ export interface IBook {
     pageCount: number;
     publisher: string;
   };
+  quantity: number;
   price: number;
 }
 

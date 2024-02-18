@@ -19,3 +19,24 @@ export interface LoginUserRequest {
   email: string;
   password: string;
 }
+
+export interface FavoritesRequest {
+  id: string;
+  title: string;
+  publisher: string;
+  image_url: string;
+  price: number;
+}
+
+export interface FavoritesResponse {
+  id: string;
+  user_id: number;
+  title: string;
+  publisher: string;
+  image_url: string;
+  price: number;
+}
+
+export interface DeleteFavoriteRequest {
+  id: string;
+}

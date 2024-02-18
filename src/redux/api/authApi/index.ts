@@ -4,10 +4,14 @@ import type {
   RegisterUserRequest,
   LoginUserResponse,
   LoginUserRequest,
+  FavoritesRequest,
+  FavoritesResponse,
+  DeleteFavoriteRequest,
 } from "./types";
 
 export const authApi = createApi({
   reducerPath: "authApi",
+  tagTypes: ["Favorites"],
   baseQuery: fetchBaseQuery({ baseUrl: "https://auth-api.cyclic.app/" }),
   endpoints: (builder) => ({
     register: builder.mutation<RegisterUserResponse, RegisterUserRequest>({
@@ -30,7 +34,50 @@ export const authApi = createApi({
         body,
       }),
     }),
+    addToFavorites: builder.mutation<FavoritesResponse, FavoritesRequest>({
+      query: (body) => ({
+        url: "favorites",
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body,
+      }),
+      invalidatesTags: ["Favorites"],
+    }),
+    deleteFavorite: builder.mutation<void, DeleteFavoriteRequest>({
+      query: ({ id }) => ({
+        url: `favorites/${id}`,
+        method: "DELETE",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["Favorites"],
+    }),
+    getFavorites: builder.query<FavoritesResponse[], void>({
+      query: () => ({
+        url: "favorites",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["Favorites"],
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useAddToFavoritesMutation,
+  useGetFavoritesQuery,
+  useDeleteFavoriteMutation,
+  useLazyGetFavoritesQuery,
+} = authApi;
