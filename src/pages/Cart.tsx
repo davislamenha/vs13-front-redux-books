@@ -26,7 +26,7 @@ const Cart = () => {
   }, [cart]);
 
   return (
-    <div className="container p-6 mx-auto mt-8 bg-white rounded-lg shadow-lg">
+    <div className="container flex-1 p-6 mx-auto mt-8 bg-white rounded-lg shadow-lg">
       <h1 className="mb-4 text-2xl font-semibold">Seu Carrinho de Compras</h1>
       <CartList books={cart} cart />
       <div className="mt-8">

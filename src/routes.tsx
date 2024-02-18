@@ -6,6 +6,7 @@ import { Register } from "./pages/Register";
 import { Authenticated } from "./pages/layouts/Authenticated";
 import { MyAccount } from "./pages/MyAccount";
 import Cart from "./pages/Cart";
+import { Favorites } from "./pages/Favorites";
 
 const Router = () => (
   <BrowserRouter>
@@ -19,6 +20,7 @@ const Router = () => (
 
       <Route path="/auth" element={<Authenticated />}>
         <Route path="minha-conta" element={<MyAccount />} />
+        <Route path="favoritos" element={<Favorites />} />
       </Route>
     </Routes>
   </BrowserRouter>
