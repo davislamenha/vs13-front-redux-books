@@ -5,7 +5,7 @@
 
 <img src="./src/assets/website.png"/>
 
-[Clique aqui para visualizar o site](vs13-front-redux-books-beta.vercel.app)
+[Clique aqui para visualizar o site](https://vs13-front-redux-books.vercel.app/)
 
 </div>
 ***
@@ -57,7 +57,7 @@ Criar um sistema de Livraria online onde:
 
 ## 4. Instruções para acessar o projeto
 
-Este projeto tem como requisito o _deploy_ pelo _Vercel_, portanto pode ser visualizado [clicando aqui](vs13-front-redux-books-beta.vercel.app)
+Este projeto tem como requisito o _deploy_ pelo _Vercel_, portanto pode ser visualizado [clicando aqui](https://vs13-front-redux-books.vercel.app/)
 
 1 - Clone o projeto
 
