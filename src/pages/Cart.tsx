@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import CartList from '@/components/CartList';
-import { useAppSelector } from '@/redux/hooks/reduxTypedHooks';
+import { useEffect, useState } from "react";
+import CartList from "@/components/CartList";
+import { useAppSelector } from "@/redux/hooks/reduxTypedHooks";
+import { Button } from "@/components/ui/button";
 
 const Cart = () => {
   const { cart } = useAppSelector((state) => state.cart);
@@ -11,7 +12,7 @@ const Cart = () => {
   const calculateTotals = () => {
     const subtotalAmount = cart.reduce(
       (acc, book) => acc + book.price * book.quantity,
-      0,
+      0
     );
     const freightAmount = subtotalAmount * 0.2;
     const totalAmount = subtotalAmount + freightAmount;
@@ -33,30 +34,28 @@ const Cart = () => {
         <h2 className="mb-2 text-lg font-semibold">Resumo do Pedido</h2>
         <div className="p-4 bg-gray-100 rounded-lg">
           <p className="font-semibold text-gray-800">
-            Subtotal:{' '}
-            {subtotal.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+            Subtotal:{" "}
+            {subtotal.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
           <p className="font-semibold text-gray-800">
-            Frete:{' '}
-            {freight.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+            Frete:{" "}
+            {freight.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
           <p className="mt-2 font-semibold text-gray-800">
-            Total:{' '}
-            {total.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
+            Total:{" "}
+            {total.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
             })}
           </p>
         </div>
-        <button className="px-4 py-2 mt-6 text-white bg-blue-500 rounded-md hover:bg-blue-600">
-          Finalizar Compra
-        </button>
+        <Button className="mt-4">Finalizar Compra</Button>
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ export function Login() {
       .unwrap()
       .then((payload) => {
         console.log("fulfilled", payload);
-        localStorage.setItem("token", JSON.stringify(payload.token));
+        localStorage.setItem("token", payload.token);
         form.setError("root", {
           type: "success",
           message: "Login bem-sucedido!",
