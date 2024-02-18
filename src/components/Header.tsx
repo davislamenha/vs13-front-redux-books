@@ -5,16 +5,18 @@ import {
   SignIn,
   SignOut,
   User,
-} from "@phosphor-icons/react";
+} from '@phosphor-icons/react';
 
-import { NavLink, useLocation } from "react-router-dom";
-import { MobileHeader } from "./MobileHeader";
-import { useState } from "react";
+import { NavLink, useLocation } from 'react-router-dom';
+import { MobileHeader } from './MobileHeader';
+import { useState } from 'react';
+import { useAppSelector } from '@/redux/hooks/reduxTypedHooks';
 
 const Header = () => {
+  const { cart } = useAppSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   function toggleMenu() {
     setOpen((state) => !state);
@@ -23,12 +25,12 @@ const Header = () => {
   return (
     <header className="py-6 text-white bg-gray-800">
       <div className="container flex items-center justify-between mx-auto">
-        <NavLink to={"/"} className="text-3xl font-bold">
+        <NavLink to={'/'} className="text-3xl font-bold">
           Redux Books
         </NavLink>
         <nav className="hidden sm:block">
           <ul className="flex items-center justify-center space-x-8">
-            {pathname !== "/" && (
+            {pathname !== '/' && (
               <li>
                 <NavLink
                   to="/"
@@ -40,7 +42,7 @@ const Header = () => {
               </li>
             )}
 
-            {pathname !== "/auth" && !token && (
+            {pathname !== '/auth' && !token && (
               <li>
                 <NavLink
                   to="/auth"
@@ -52,7 +54,7 @@ const Header = () => {
               </li>
             )}
 
-            {pathname !== "/auth/favoritos" && token && (
+            {pathname !== '/auth/favoritos' && token && (
               <li>
                 <NavLink
                   to="/auth/favoritos"
@@ -64,7 +66,7 @@ const Header = () => {
               </li>
             )}
 
-            {pathname !== "/auth/minha-conta" && token && (
+            {pathname !== '/auth/minha-conta' && token && (
               <li>
                 <NavLink
                   to="/auth/minha-conta"
@@ -76,7 +78,7 @@ const Header = () => {
               </li>
             )}
 
-            {pathname !== "/carrinho" && (
+            {pathname !== '/carrinho' && (
               <li>
                 <NavLink
                   to="/carrinho"
@@ -84,6 +86,9 @@ const Header = () => {
                 >
                   <ShoppingCart size={32} />
                   Carrinho
+                  <span className="py-1 px-2 text-sm font-bold text-white bg-slate-500 rounded-md top-[-1rem] right-[-1.2rem]">
+                    {cart.length}
+                  </span>
                 </NavLink>
               </li>
             )}
@@ -91,7 +96,7 @@ const Header = () => {
             {token && (
               <li>
                 <NavLink
-                  onClick={() => localStorage.removeItem("token")}
+                  onClick={() => localStorage.removeItem('token')}
                   to="/auth"
                   className="flex items-center justify-center gap-2 hover:text-gray-300"
                 >
