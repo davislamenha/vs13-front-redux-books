@@ -52,6 +52,11 @@ Criar um sistema de Livraria online onde:
 - Foi _codado_ em _branchs_ com nomes semânticos, sendo permitido somente abrir _pull request_ para a _branch develop_, após a tarefa conluída foi aberta a _pull request_ para a _branch main_;
 - Para o código foi adotado criação de classes e _commites_ em inglês;
 - Pesquisa de _Ui Design_ para escolher as paletas relacionadas ao tema de livraria;
+- Utilizamos uma API criada por _André Felipe Souza_ para:
+  - Cadastrar um novo usuário.
+  - Fazer o login do usuário.
+  - Gerenciar os livros favoritos do usuário.
+- Utilizamos a API _Google Books_ para os dados dos livros;
 
 ---
 
